@@ -1,22 +1,24 @@
 #include <stdio.h>
-#include <sys/mount.h>
-#include <errno.h>
-#include <string.h>
 #include <unistd.h>
-#include <sys/stat.h>  
 #include <spawn.h>
-#include <stdlib.h>
+#include <sys/wait.h>
+
+#define STAR "\x1b[36m*\x1b[0m"
 
 extern char **environ;
 
 int main() {
     pid_t pid;
+    printf(STAR " Stage 3: tty & supervise loop\n");
     posix_spawn(&pid, "/sbin/agetty", 0, 0, (char*[]){"/sbin/agetty", "-L", "tty1", "--noclear", "115200", "vt100", NULL}, environ);
     posix_spawn(&pid, "/sbin/agetty", 0, 0, (char*[]){"/sbin/agetty", "-L", "tty2", "--noclear", "115200", "vt100", NULL}, environ);
     posix_spawn(&pid, "/sbin/agetty", 0, 0, (char*[]){"/sbin/agetty", "-L", "tty3", "--noclear", "115200", "vt100", NULL}, environ);
     posix_spawn(&pid, "/sbin/agetty", 0, 0, (char*[]){"/sbin/agetty", "-L", "tty4", "--noclear", "115200", "vt100", NULL}, environ);
-    printf("\nBoot complete!\n-----------------------------------------------------------------\n");
-    printf("oINIT v.1C\n");
-    printf("No idea how many lines of code this has!\n");
-    while (1){sleep(1);}
+    printf("\n" STAR " Boot complete!\n--------------------------------------------------------\n");
+    printf(STAR " oINIT v.1C\n");
+    printf(STAR " No idea how many lines of code this has, but its probably a lot!\n");
+    while (1) {
+        while (waitpid(-1, 0, WNOHANG) > 0);
+        pause();
+    }
 }
