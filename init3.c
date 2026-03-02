@@ -18,7 +18,6 @@ int main() {
     printf(STAR " oINIT v.1C\n");
     printf(STAR " No idea how many lines of code this has, but its probably a lot!\n");
     while (1) {
-        while (waitpid(-1, NULL, WNOHANG) > 0);
-        pause();
+        sleep(1);
     }
 }
