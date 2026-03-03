@@ -4,7 +4,7 @@ gcc init.c -o init
 doas mv init /sbin/oinit
 sudo mv init /sbin/oinit
 
-gcc init2.c -o init2
+nim c init2.nim 
 doas mv init2 /sbin/oinit-service
 sudo mv init2 /sbin/oinit-service
 
