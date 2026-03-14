@@ -9,7 +9,7 @@ extern char **environ;
 
 int main() {
     pid_t pid;
-    printf(STAR " Stage 3: tty & supervise loop\n");
+    printf(STAR " Stage 3: finalization.\n");
     posix_spawn(&pid, "/sbin/agetty", 0, 0, (char*[]){"/sbin/agetty", "-L", "tty1", "--noclear", "115200", "vt100", NULL}, environ);
     posix_spawn(&pid, "/sbin/agetty", 0, 0, (char*[]){"/sbin/agetty", "-L", "tty2", "--noclear", "115200", "vt100", NULL}, environ);
     posix_spawn(&pid, "/sbin/agetty", 0, 0, (char*[]){"/sbin/agetty", "-L", "tty3", "--noclear", "115200", "vt100", NULL}, environ);
