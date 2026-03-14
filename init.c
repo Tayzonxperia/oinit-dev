@@ -40,22 +40,10 @@ void mounts(void) {
 
 }
 
-void udev(void) {
-    pid_t pid;
-    printf(STAR " Starting udev\n");
-    posix_spawn(&pid, "/sbin/udevd", 0, 0, (char*[]){"/sbin/udevd", "--daemon", NULL}, environ);
-    printf(STAR " Triggering devices\n");
-    posix_spawn(&pid, "/sbin/udevadm", 0, 0, (char*[]){"/sbin/udevadm", "trigger", NULL}, environ);
-    printf(STAR " Settling devices\n");
-    posix_spawn(&pid, "/sbin/udevadm", 0, 0, (char*[]){"/sbin/udevadm", "settle", NULL}, environ);
-    printf(STAR " udev complete\n");
-}
-
 int main(void) {
     pid_t pid;
     boot_msg();
     mounts();
-    udev();
     printf(STAR " Init complete\n");
     printf(STAR " Starting service management\n");
     posix_spawn(&pid, "/sbin/oinit-service", 0, 0, (char*[]){"/sbin/oinit-service", NULL}, environ);
